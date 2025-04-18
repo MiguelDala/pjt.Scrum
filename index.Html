@@ -4,126 +4,480 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trabalho sobre Scrum</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         body {
             font-family: 'Arial', sans-serif;
-            background-image: url('https://i.gifer.com/fzUl.gif');
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.gifer.com/fzUl.gif');
             background-size: cover;
             background-repeat: no-repeat;
+            background-attachment: fixed;
             color: #333;
             padding: 20px;
+            margin: 0;
         }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 123, 255, 0.9);
+            padding: 20px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 30px;
+            left: 0;
+            height: 70px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .logo-container img {
+            width: 120px;
+            height: auto;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .logo-container:hover img {
+            transform: scale(1.05);
+            filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+
+        .nav-menu a:hover {
+            color: #ffd700;
+        }
+
         h1, h2 {
             color: #007bff;
+            text-align: center;
         }
+
         .container {
             max-width: 800px;
-            margin: auto;
+            margin: 80px auto 20px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
         }
+
         .card {
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
             color: white;
             text-align: center;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card h2 {
+            color: #4fc3f7;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4fc3f7, transparent);
+        }
+
+        .card ul li {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .card ul li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .card strong {
+            color: #4fc3f7;
+            font-weight: bold;
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        @keyframes cardGlow {
+            0% { box-shadow: 0 0 5px rgba(79, 195, 247, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(79, 195, 247, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(79, 195, 247, 0.5); }
+        }
+
+        .card:hover {
+            animation: cardGlow 2s infinite;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
         }
-        h1 {
-            text-align: center;
-        }
+
         .certificate {
             text-align: center;
             margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .certificate h2 {
+            color: #4fc3f7;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .certificate h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4fc3f7, transparent);
+        }
+
+        .certificate-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
         .certificate img {
-            width: 50%; /* Ajuste o tamanho conforme necessário */
-            max-width: 400px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 250px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid rgba(79, 195, 247, 0.2);
+        }
+
+        .certificate img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 12px 30px rgba(79, 195, 247, 0.4);
+            border-color: rgba(79, 195, 247, 0.5);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #007bff;
+        }
+
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.1);
+            border-color: #4fc3f7;
+            box-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+        }
+
+        .profile-section {
+            text-align: center;
+            margin: 100px auto 40px;
+            max-width: 800px;
+        }
+
+        .profile-picture {
+            width: 250px;
+            height: 250px;
+            border: 3px solid #4fc3f7;
+            overflow: hidden;
+            margin: 0 auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.05);
+            border-color: #007bff;
+            box-shadow: 0 12px 30px rgba(79, 195, 247, 0.4);
         }
     </style>
 </head>
 <body>
-    <h1>O que é Scrum?</h1>
-    
-    <div class="card">
-        <h2>Introdução ao Scrum</h2>
-        <p>Scrum é um framework ágil que permite que equipes trabalhem de forma colaborativa e iterativa para desenvolver produtos complexos. Ele é amplamente utilizado em desenvolvimento de software, mas pode ser aplicado em diversos tipos de projetos.</p>
-    </div>
-    
-    <div class="card">
-        <h2> Papéis no Scrum</h2>
-        <ul>
-            <li><strong>Product Owner (PO)</strong>: Responsável por maximizar o valor do produto e gerenciar o backlog do produto. O PO prioriza as tarefas e garante que a equipe entenda os requisitos.</li>
-            <li><strong>Scrum Master</strong>: Facilita o processo Scrum, ajuda a remover impedimentos e garante que a equipe siga as práticas ágeis. O Scrum Master atua como um líder servil.</li>
-            <li><strong>Equipe de Desenvolvimento</strong>: Composta por profissionais que trabalham na entrega do produto. A equipe é auto-organizada e multifuncional.</li>
-        </ul>
-    </div>
-    
-    <div class="card">
-        <h2>3. Artefatos do Scrum</h2>
-        <ul>
-            <li><strong>Product Backlog</strong>: Uma lista priorizada de requisitos e funcionalidades desejadas para o produto. É um documento vivo que evolui ao longo do projeto.</li>
-            <li><strong>Sprint Backlog</strong>: Um subconjunto do Product Backlog que a equipe se compromete a completar durante uma Sprint. Inclui tarefas específicas e estimativas de tempo.</li>
-            <li><strong>Incremento</strong>: O resultado do trabalho realizado durante uma Sprint, que deve estar em um estado utilizável e atender à definição de "pronto".</li>
-        </ul>
-    </div>
-    
-    <div class="card">
-        <h2> Eventos do Scrum</h2>
-        <ul>
-            <li><strong>Sprint</strong>: Um período fixo (geralmente de 1 a 4 semanas) durante o qual um incremento do produto é desenvolvido. As Sprints são time-boxed, ou seja, têm uma duração fixa.</li>
-            <li><strong>Sprint Planning</strong>: Reunião no início da Sprint onde a equipe define o que será trabalhado e como será feito.</li>
-            <li><strong>Daily Scrum</strong>: Reunião diária de 15 minutos onde a equipe sincroniza atividades e planeja o trabalho do dia.</li>
-            <li><strong>Sprint Review</strong>: Reunião no final da Sprint onde a equipe apresenta o que foi concluído e coleta feedback dos stakeholders.</li>
-            <li><strong>Sprint Retrospective</strong>: Reunião após a Sprint Review onde a equipe reflete sobre o processo e identifica melhorias para a próxima Sprint.</li>
-        </ul>
-    </div>
-    
-    <div class="card">
-        <h2> Princípios do Scrum</h2>
-        <ul>
-            <li><strong>Transparência</strong>: Todos os aspectos do processo devem ser visíveis para aqueles que estão envolvidos.</li>
-            <li><strong>Inspeção</strong>: O progresso deve ser inspecionado regularmente para detectar variações indesejadas.</li>
-            <li><strong>Adaptação</strong>: Se um aspecto do processo não estiver funcionando, ele deve ser ajustado rapidamente.</li>
-        </ul>
-    </div>
-    
-    <div class="card">
-        <h2> Benefícios do Scrum</h2>
-        <ul>
-            <li><strong>Flexibilidade e Adaptabilidade</strong>: Permite que as equipes se adaptem rapidamente a mudanças nos requisitos.</li>
-            <li><strong>Melhoria Contínua</strong>: Através das retrospectivas, as equipes podem identificar e implementar melhorias.</li>
-            <li><strong>Maior Colaboração</strong>: Promove a comunicação e colaboração entre os membros da equipe e stakeholders.</li>
-        </ul>
-    </div>
-    
-    <div class="card">
-        <h2>
-             Desafios do Scrum</h2>
-        <ul>
-            <li><strong>Resistência à Mudança</strong>: Algumas equipes podem ter dificuldade em adotar novas práticas.</li>
-            <li><strong>Falta de Comprometimento</strong>: É essencial que todos os membros da equipe estejam comprometidos com o processo Scrum.</li>
-            <li><strong>Gerenciamento de Expectativas</strong>: É importante que os stakeholders entendam o que esperar do processo Scrum.</li>
-        </ul>
-    </div>
-    
-    <!-- Adicionando o certificado como imagem -->
-    <div class="certificate">
-        <h2>Meus certificados</h2>
-        <img src=" https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/site/2148462668/products/3f18415-1f10-d46c-2501-f41fa02c148d_CP_BannerKajabi_BAPC.png" alt="Certificado de Conclusão">
-     <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2158110470/settings_images/b4f33e-130-033c-b28f-7c3205ade00a_922b8532-f797-44a5-bb48-086694f47362.png" alt="Certificado de Conclusão">
-     <img src="  https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2158110470/settings_images/11eafaf-0d11-2ef-bc2c-723a84ed0e1b_CP_BannerKajabi_DSPC_EN_1_.png"  alt="Certificado de Conclusão">
+    <nav class="nav-menu">
+        <div class="logo-container">
+            <img src="https://certiprof.com/cdn/shop/files/Logo_certiprof_1.webp?v=1742403509&width=180" alt="Certiprof Logo">
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>O que é <span class="highlight">Scrum</span>?</h1>
+        
+        <div class="card" id="introducao">
+            <h2>Introdução ao Scrum</h2>
+            <p>Scrum é um framework ágil que permite que equipes trabalhem de forma colaborativa e iterativa para desenvolver produtos complexos. Ele é amplamente utilizado em desenvolvimento de software, mas pode ser aplicado em diversos tipos de projetos.</p>
+        </div>
+        
+        <div class="card" id="papéis">
+            <h2>Papéis no Scrum</h2>
+            <ul>
+                <li><strong>Product Owner (PO)</strong>: Responsável por maximizar o valor do produto e gerenciar o backlog do produto. O PO prioriza as tarefas e garante que a equipe entenda os requisitos.</li>
+                <li><strong>Scrum Master</strong>: Facilita o processo Scrum, ajuda a remover impedimentos e garante que a equipe siga as práticas ágeis. O Scrum Master atua como um líder servil.</li>
+                <li><strong>Equipe de Desenvolvimento</strong>: Composta por profissionais que trabalham na entrega do produto. A equipe é auto-organizada e multifuncional.</li>
+            </ul>
+        </div>
+        
+        <div class="card" id="artefatos">
+            <h2>Artefatos do Scrum</h2>
+            <ul>
+                <li><strong>Product Backlog</strong>: Uma lista priorizada de requisitos e funcionalidades desejadas para o produto. É um documento vivo que evolui ao longo do projeto.</li>
+                <li><strong>Sprint Backlog</strong>: Um subconjunto do Product Backlog que a equipe se compromete a completar durante uma Sprint. Inclui tarefas específicas e estimativas de tempo.</li>
+                <li><strong>Incremento</strong>: O resultado do trabalho realizado durante uma Sprint, que deve estar em um estado utilizável e atender à definição de "pronto".</li>
+            </ul>
+        </div>
+        
+        <div class="card" id="eventos">
+            <h2>Eventos do Scrum</h2>
+            <ul>
+                <li><strong>Sprint</strong>: Um período fixo (geralmente de 1 a 4 semanas) durante o qual um incremento do produto é desenvolvido. As Sprints são time-boxed, ou seja, têm uma duração fixa.</li>
+                <li><strong>Sprint Planning</strong>: Reunião no início da Sprint onde a equipe define o que será trabalhado e como será feito.</li>
+                <li><strong>Daily Scrum</strong>: Reunião diária de 15 minutos onde a equipe sincroniza atividades e planeja o trabalho do dia.</li>
+                <li><strong>Sprint Review</strong>: Reunião no final da Sprint onde a equipe apresenta o que foi concluído e coleta feedback dos stakeholders.</li>
+                <li><strong>Sprint Retrospective</strong>: Reunião após a Sprint Review onde a equipe reflete sobre o processo e identifica melhorias para a próxima Sprint.</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>Princípios do Scrum</h2>
+            <ul>
+                <li><strong>Transparência</strong>: Todos os aspectos do processo devem ser visíveis para aqueles que estão envolvidos.</li>
+                <li><strong>Inspeção</strong>: O progresso deve ser inspecionado regularmente para detectar variações indesejadas.</li>
+                <li><strong>Adaptação</strong>: Se um aspecto do processo não estiver funcionando, ele deve ser ajustado rapidamente.</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>Benefícios do Scrum</h2>
+            <ul>
+                <li><strong>Flexibilidade e Adaptabilidade</strong>: Permite que as equipes se adaptem rapidamente a mudanças nos requisitos.</li>
+                <li><strong>Melhoria Contínua</strong>: Através das retrospectivas, as equipes podem identificar e implementar melhorias.</li>
+                <li><strong>Maior Colaboração</strong>: Promove a comunicação e colaboração entre os membros da equipe e stakeholders.</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>Desafios do Scrum</h2>
+            <ul>
+                <li><strong>Resistência à Mudança</strong>: Algumas equipes podem ter dificuldade em adotar novas práticas.</li>
+                <li><strong>Falta de Comprometimento</strong>: É essencial que todos os membros da equipe estejam comprometidos com o processo Scrum.</li>
+                <li><strong>Gerenciamento de Expectativas</strong>: É importante que os stakeholders entendam o que esperar do processo Scrum.</li>
+            </ul>
+        </div>
+        
+        <div class="certificate" id="certificados">
+            <h2>Meus Certificados</h2>
+            <div class="certificate-gallery">
+                <img src="https://certiprof.com/cdn/shop/files/Certiprof_Scrum_Master_badge480x480_1440x1440.webp?v=1742418498" alt="Certificado Scrum Master">
+                <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/site/2148462668/products/3f18415-1f10-d46c-2501-f41fa02c148d_CP_BannerKajabi_BAPC.png" alt="Certificado de Conclusão">
+                <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2158110470/settings_images/b4f33e-130-033c-b28f-7c3205ade00a_922b8532-f797-44a5-bb48-086694f47362.png" alt="Certificado de Conclusão">
+                <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2158110470/settings_images/11eafaf-0d11-2ef-bc2c-723a84ed0e1b_CP_BannerKajabi_DSPC_EN_1_.png" alt="Certificado de Conclusão">
+            </div>
+        </div>
     </div>
 
+    <div class="footer">
+        <p>Desenvolvido com ❤️ para o Trabalho sobre Scrum</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+
+    <div class="scroll-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Scroll to top button
+        const scrollTop = document.querySelector('.scroll-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add animation to cards when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.5s ease-out forwards';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
